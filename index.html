@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Dashboard — D_project</title>
+<style>
+:root{--green:#1D9E75;--blue:#4A90D9;--gray-50:#F8F9FA;--gray-100:#F1F3F4;--gray-200:#E8EAED;--gray-600:#666E75;--gray-900:#1A1D23;--white:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--gray-50);color:var(--gray-900);font-size:14px;}
+.page{max-width:960px;margin:0 auto;padding:24px 20px;}
+.header{background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:18px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start;}
+.header-label{font-size:11px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.header-title{font-size:20px;font-weight:700;color:var(--gray-900);}
+.header-right{text-align:right;}
+.header-date{font-size:13px;color:var(--gray-600);margin-bottom:6px;}
+.status-dot{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--green);}
+.status-dot::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;}
+input[type=radio]{display:none;}
+.filter-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-btn{cursor:pointer;border:1.5px solid var(--gray-200);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;background:var(--white);color:var(--gray-600);transition:.15s;user-select:none;}
+.filter-btn:hover{border-color:var(--green);color:var(--green);}
+#f-all:checked ~ .page label[for=f-all],
+    #f-v1:checked ~ .page label[for=f-v1],
+    #f-v2:checked ~ .page label[for=f-v2] { border-color:var(--green); background:var(--green); color:#fff; }
+
+.view-all { display: table-row; }
+    .view-v1 { display: none; }
+    .view-v2 { display: none; }
+    #f-all:checked ~ .page .view-all { display: table-row; }
+    #f-v1:checked ~ .page .view-v1 { display: table-row; }
+    #f-v1:checked ~ .page .view-all { display: none; }
+    #f-v1:checked ~ .page .view-v2 { display: none; }
+    #f-v2:checked ~ .page .view-v2 { display: table-row; }
+    #f-v2:checked ~ .page .view-all { display: none; }
+    #f-v2:checked ~ .page .view-v1 { display: none; }
+
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+.metric-card{background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:16px 18px;}
+.metric-card.highlight{border-left:3px solid var(--green);}
+.metric-label{font-size:10px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.metric-val{font-size:30px;font-weight:700;color:var(--gray-900);line-height:1;}
+.metric-sub{font-size:11px;color:var(--gray-600);margin-top:4px;}
+.section-hd{font-size:10px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--gray-200);}
+.table-wrap{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;overflow:hidden;font-size:13px;}
+th{padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--gray-200);text-align:center;}
+th.th-label{background:var(--gray-50);color:var(--gray-600);text-align:left;}
+th.th-city-1{background:var(--green);color:#fff;}
+th.th-city-2{background:var(--blue);color:#fff;}
+th.th-total{background:var(--gray-900);color:#fff;}
+td{padding:9px 14px;border-bottom:1px solid var(--gray-200);}
+.td-quota{color:var(--gray-600);}
+.td-quota.total{font-weight:700;color:var(--gray-900);background:var(--gray-100);}
+.td-num{text-align:center;font-variant-numeric:tabular-nums;}
+.td-num.bold{font-weight:700;}
+tr:hover td{background:#F5F7FA;}
+.chart-wrap{background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:16px 20px;}
+.footer{margin-top:20px;text-align:center;font-size:11px;color:#A0AEC0;padding-bottom:8px;}
+</style>
+</head>
+<body>
+<input type="radio" id="f-all" name="vf" checked>
+<input type="radio" id="f-v1" name="vf">
+<input type="radio" id="f-v2" name="vf">
+
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="header-label">Daily Field Progress Report</div>
+      <div class="header-title">D_project</div>
+    </div>
+    <div class="header-right">
+      <div class="header-date">Friday, 29 May 2026 15:42</div>
+      <div class="status-dot">In Field</div>
+    </div>
+  </div>
+  <div class="filter-bar"><label for="f-all" class="filter-btn">Tat ca</label>
+    <label for="f-v1" class="filter-btn">Dia diem 1</label>
+    <label for="f-v2" class="filter-btn">Dia diem 2</label>
+</div>
+  <div class="section-hd">Overview</div>
+  <div class="metric-grid">
+    <div class="metric-card highlight"><div class="metric-label">Net Completes</div><div class="metric-val">7</div><div class="metric-sub">De-duplicated</div></div>
+    <div class="metric-card"><div class="metric-label">TP.HCM</div><div class="metric-val">7</div></div>
+    <div class="metric-card"><div class="metric-label">Ha Noi</div><div class="metric-val">0</div></div>
+    <div class="metric-card"><div class="metric-label">Dia diem 1</div><div class="metric-val">4</div></div><div class="metric-card"><div class="metric-label">Dia diem 2</div><div class="metric-val">3</div></div>
+  </div>
+  <div class="section-hd">Crosstab — Quota x City</div>
+  <div class="table-wrap"><table>
+    <thead><tr>
+      <th class="th-label">Quota Cell</th>
+      <th class="th-city-1">TP.HCM</th>
+      <th class="th-city-2">Ha Noi</th>
+      <th class="th-total">TOTAL</th>
+    </tr></thead>
+    <tbody><tr class="view-all"><td class="td-quota  total">TOTAL</td><td class="td-num bold">7</td><td class="td-num bold">0</td><td class="td-num bold">7</td></tr><tr class="view-all"><td class="td-quota">Nam</td><td class="td-num">6</td><td class="td-num">0</td><td class="td-num">6</td></tr><tr class="view-all"><td class="td-quota">Nu</td><td class="td-num">1</td><td class="td-num">0</td><td class="td-num">1</td></tr><tr class="view-all"><td class="td-quota">Nhom tuoi 2</td><td class="td-num">3</td><td class="td-num">0</td><td class="td-num">3</td></tr><tr class="view-all"><td class="td-quota">Nhom tuoi 3</td><td class="td-num">4</td><td class="td-num">0</td><td class="td-num">4</td></tr><tr class="view-v1"><td class="td-quota  total">TOTAL</td><td class="td-num bold">4</td><td class="td-num bold">0</td><td class="td-num bold">4</td></tr><tr class="view-v1"><td class="td-quota">Nam</td><td class="td-num">3</td><td class="td-num">0</td><td class="td-num">3</td></tr><tr class="view-v1"><td class="td-quota">Nu</td><td class="td-num">1</td><td class="td-num">0</td><td class="td-num">1</td></tr><tr class="view-v1"><td class="td-quota">Nhom tuoi 2</td><td class="td-num">3</td><td class="td-num">0</td><td class="td-num">3</td></tr><tr class="view-v1"><td class="td-quota">Nhom tuoi 3</td><td class="td-num">1</td><td class="td-num">0</td><td class="td-num">1</td></tr><tr class="view-v2"><td class="td-quota  total">TOTAL</td><td class="td-num bold">3</td><td class="td-num bold">0</td><td class="td-num bold">3</td></tr><tr class="view-v2"><td class="td-quota">Nam</td><td class="td-num">3</td><td class="td-num">0</td><td class="td-num">3</td></tr><tr class="view-v2"><td class="td-quota">Nu</td><td class="td-num">0</td><td class="td-num">0</td><td class="td-num">0</td></tr><tr class="view-v2"><td class="td-quota">Nhom tuoi 2</td><td class="td-num">0</td><td class="td-num">0</td><td class="td-num">0</td></tr><tr class="view-v2"><td class="td-quota">Nhom tuoi 3</td><td class="td-num">3</td><td class="td-num">0</td><td class="td-num">3</td></tr></tbody>
+  </table></div>
+  <div class="section-hd">Chart — Gender & Age by City</div>
+  <div class="chart-wrap"><svg viewBox="0 0 380 232" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px"><line x1="35" y1="180" x2="360" y2="180" stroke="#E8EAED" stroke-width="1"/><text x="32" y="184" text-anchor="end" font-size="9" fill="#888">0</text><line x1="35" y1="100" x2="360" y2="100" stroke="#E8EAED" stroke-width="1"/><text x="32" y="104" text-anchor="end" font-size="9" fill="#888">5</text><line x1="35" y1="20" x2="360" y2="20" stroke="#E8EAED" stroke-width="1"/><text x="32" y="24" text-anchor="end" font-size="9" fill="#888">10</text><rect x="40" y="84" width="20" height="96" fill="#1D9E75" rx="2"/><text x="50" y="81" text-anchor="middle" font-size="9" fill="#444">6</text><rect x="70" y="180" width="20" height="0" fill="#4A90D9" rx="2"/><text x="65" y="195" text-anchor="middle" font-size="11" fill="#333" font-weight="600">Nam</text><rect x="120" y="164" width="20" height="16" fill="#1D9E75" rx="2"/><text x="130" y="161" text-anchor="middle" font-size="9" fill="#444">1</text><rect x="150" y="180" width="20" height="0" fill="#4A90D9" rx="2"/><text x="145" y="195" text-anchor="middle" font-size="11" fill="#333" font-weight="600">Nu</text><rect x="200" y="132" width="20" height="48" fill="#1D9E75" rx="2"/><text x="210" y="129" text-anchor="middle" font-size="9" fill="#444">3</text><rect x="230" y="180" width="20" height="0" fill="#4A90D9" rx="2"/><text x="225" y="195" text-anchor="middle" font-size="11" fill="#333" font-weight="600">NT 2</text><rect x="280" y="116" width="20" height="64" fill="#1D9E75" rx="2"/><text x="290" y="113" text-anchor="middle" font-size="9" fill="#444">4</text><rect x="310" y="180" width="20" height="0" fill="#4A90D9" rx="2"/><text x="305" y="195" text-anchor="middle" font-size="11" fill="#333" font-weight="600">NT 3</text><rect x="40" y="208" width="12" height="12" fill="#1D9E75" rx="2"/><text x="56" y="219" font-size="10" fill="#555">TP.HCM</text><rect x="160" y="208" width="12" height="12" fill="#4A90D9" rx="2"/><text x="176" y="219" font-size="10" fill="#555">Ha Noi</text></svg></div>
+  <div class="footer">Source: D_project.xlsx | Generated: Friday, 29 May 2026 15:42 | Net N = 7</div>
+</div>
+</body></html>
